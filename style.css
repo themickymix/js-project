@@ -1,0 +1,22 @@
+body {
+  background-color: #d8d2c2;
+}
+.foothere {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.foothere:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.03);
+}
+
+.foothere {
+  transform: scale(1);
+}
+.bgimg {
+  height: 200px;
+}
+.descrip {
+    color: rgb(122, 122, 122);
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Product Details</title>
+</head>
+
+<body class="d-flex justify-content-center">
+    <style>
+        .ime {
+            width: 100%;
+            height: auto;
+        }
+
+        @media (min-width: 768px) {
+            .ime {
+                width: 70%;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .ime {
+                width: 40%;
+            }
+
+            .maindiv {
+                width: 40vw;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .maindiv {
+                width: 100vw;
+                margin: 5rem;
+            }
+        }
+
+        /* Adjusts the height of the dividers to fill column space */
+        .vertical-divider {
+            border-left: 1px solid #000;
+            height: 70%;
+            margin: 0 10px;
+        }
+
+        /* Ensures that columns have enough spacing */
+        .col {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Adds some space to the top */
+        .container {
+            width: 90vw;
+            margin-top: 2rem;
+        }
+    </style>
+
+    <div class="d-block justify-content-center">
+        <div id="product-details" class="maindiv p-3 m-2 shadow rounded"></div>
+        <div class="container text-center">
+            <div class="row">
+                <div class="col">
+                    <div>Chat</div>
+                </div>
+
+                <!-- Vertical Divider -->
+                <div class="col-auto">
+                    <div class="vertical-divider"></div>
+                </div>
+
+                <div class="col">
+                    <div>Add to cart</div>
+                </div>
+
+                <!-- Vertical Divider -->
+                <div class="col-auto">
+                    <div class="vertical-divider"></div>
+                </div>
+
+                <div class="col btn-success">
+                    <button type="button" class="btn btn-success">BUY NOW</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchProductDetails() {
+            const params = new URLSearchParams(window.location.search);
+            const productId = params.get('id'); // Get the product ID from the URL
+
+            console.log("Fetching details for product ID:", productId); // Debugging line
+
+            try {
+                const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const product = await response.json();
+
+                // Display product details
+                document.getElementById('product-details').innerHTML = `
+                <div class="d-flex justify-content-center">
+                    <img class="ime" src="${product.image}" alt="${product.title}"></div>
+<h5>Price: ₱${product.price.toFixed(2)}</h5>
+                    <h6>${product.title}</h6>
+                    
+                    <p>${product.description}</p>
+                `;
+            } catch (error) {
+                console.error("Error fetching product details:", error);
+                document.getElementById('product-details').innerHTML = `
+                    <p>Error fetching product details. Please try again later.</p>
+                `;
+            }
+        }
+
+        fetchProductDetails(); // Call the function to execute it
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
